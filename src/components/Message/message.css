@@ -1,0 +1,30 @@
+.chat-item {
+  border-radius: 20px;
+  padding: 15px;
+  background-color: #b4dce7;
+  color: #1c2c4c;
+  width: max-content;
+  max-width: calc(100% - 50px);
+  display: flex;
+  align-items: flex-start;
+  margin-bottom: 20px;
+}
+
+.chat-item.right {
+  text-align: end;
+  margin-left: auto;
+  border-radius: 20px;
+  padding: 10px 20px;
+}
+
+.chat-item__user {
+  font-weight: bold;
+  margin-bottom: 10px;
+  font-size: 1rem;
+  color: #6e1616;
+}
+
+.chat-item__message {
+  word-break: break-all;
+  white-space: pre-wrap;
+}

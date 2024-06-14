@@ -1,25 +1,23 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import { useState } from "react";
+import { v4 } from "uuid";
+import "./App.css";
+import ChatBox from "./components/Chat";
+import { useSessionStorage } from "./hooks/useSessionStorage";
+import { UserContext } from "./providers/user";
+import { Flex } from "./shared/Flex";
 
 function App() {
+  const [user, setUser] = useSessionStorage("user", "");
+  const [id] = useSessionStorage("sessionId", v4());
+  const [lastViewed, setLastViewed] = useState("");
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <UserContext.Provider value={{ name: user, id, lastViewed, setLastViewed }}>
+      {!user && <div>Type a username</div>}
+      <Flex style={{ flexDirection: "column" }}>
+        <ChatBox />
+      </Flex>
+    </UserContext.Provider>
   );
 }
 
