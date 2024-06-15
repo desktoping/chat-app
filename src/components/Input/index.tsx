@@ -1,5 +1,5 @@
 import { addDoc, serverTimestamp } from "firebase/firestore";
-import { RefObject, useContext, useEffect, useState } from "react";
+import { useContext, useEffect, useRef, useState } from "react";
 import InputEmoji from "react-input-emoji";
 import { UserContext } from "../../providers/user";
 import { sanitizeMessage } from "../../util";
@@ -7,41 +7,42 @@ import { dbMessageRef } from "../../util/firebase";
 import "./input.css";
 
 interface ChatInputProps {
-  readonly scroll: RefObject<HTMLSpanElement>;
+  readonly handleScroll: () => void;
 }
 
-export const ChatInput = ({ scroll }: ChatInputProps) => {
+export const ChatInput = ({ handleScroll }: ChatInputProps) => {
   const [message, setMessage] = useState<string>("");
-  const { name, id, setLastViewed } = useContext(UserContext);
+  const { author, authorId } = useContext(UserContext);
 
-  useEffect(() => {
-    scroll.current?.scrollIntoView({ behavior: "smooth" });
-  }, [scroll.current]);
+  const inputRef = useRef<HTMLInputElement>();
 
-  const sendMessage = async () => {
+  const sendMessageHandler = async () => {
     if (!message.trim().length) return;
 
-    const docId = await addDoc(dbMessageRef, {
+    await addDoc(dbMessageRef, {
       text: sanitizeMessage(message),
       createdAt: serverTimestamp(),
-      author: name,
-      authorId: id,
+      author,
+      authorId,
     });
 
-    scroll.current?.scrollIntoView({ behavior: "smooth" });
-    setLastViewed(docId.id);
     setMessage("");
+    handleScroll();
   };
+
+  useEffect(() => {
+    inputRef.current?.focus();
+  }, []);
 
   return (
     <div className="send-message">
       <InputEmoji
+        ref={inputRef}
         value={message}
-        onEnter={sendMessage}
+        onEnter={sendMessageHandler}
         onChange={setMessage}
-        placeholder="Type a message"
+        placeholder="Press Enter key to send"
         shouldReturn
-        height={60}
         shouldConvertEmojiToImage={false}
       />
     </div>

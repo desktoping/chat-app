@@ -2,15 +2,13 @@ import { createContext } from "react";
 import { v4 } from "uuid";
 
 interface UserContextType {
-  name: string;
-  id: string;
-  setLastViewed: (id: string) => void;
-  lastViewed: string;
+  author: string;
+  authorId: string;
+  setAuthor: (author: string) => void;
 }
 
 export const UserContext = createContext<UserContextType>({
-  name: "default",
-  id: v4(),
-  lastViewed: "",
-  setLastViewed: () => null,
+  author: "default",
+  authorId: v4(),
+  setAuthor: () => null,
 });

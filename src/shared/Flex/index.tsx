@@ -1,7 +1,7 @@
 import { ReactNode, useMemo } from "react";
 
 interface FlexProps extends React.DetailedHTMLProps<React.HTMLAttributes<HTMLDivElement>, HTMLDivElement> {
-  children: ReactNode;
+  readonly children: ReactNode;
 }
 
 export const Flex = ({ children, style, ...rest }: FlexProps) => {

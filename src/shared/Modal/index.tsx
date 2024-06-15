@@ -1,56 +1,41 @@
-import { ReactNode, useEffect, useRef, useState } from "react";
+import { useContext, useEffect, useRef, useState } from "react";
+import { UserContext } from "../../providers/user";
+import { Flex } from "../Flex";
 import "./modal.css";
 
-interface ModalProps {
-  isOpen: boolean;
-  hasCloseBtn?: boolean;
-  onClose?: () => void;
-  children: ReactNode;
-}
-
-const Modal = ({ isOpen, hasCloseBtn = true, onClose, children }: ModalProps) => {
-  const [isModalOpen, setModalOpen] = useState(isOpen);
+// Native browser modal implementation
+export const UsernameModal = () => {
+  const { author, setAuthor } = useContext(UserContext);
+  const [value, setValue] = useState("");
   const modalRef = useRef<HTMLDialogElement | null>(null);
 
-  const handleCloseModal = () => {
-    if (onClose) {
-      onClose();
-    }
-    setModalOpen(false);
-  };
-
-  const handleKeyDown = (event: React.KeyboardEvent<HTMLDialogElement>) => {
-    if (event.key === "Escape") {
-      handleCloseModal();
-    }
-  };
-
   useEffect(() => {
-    setModalOpen(isOpen);
-  }, [isOpen]);
-
-  useEffect(() => {
-    const modalElement = modalRef.current;
-
-    if (modalElement) {
-      if (isModalOpen) {
-        modalElement.showModal();
-      } else {
-        modalElement.close();
-      }
+    if (!author) {
+      modalRef.current?.showModal();
+      return;
     }
-  }, [isModalOpen]);
+
+    modalRef.current?.close();
+  }, [author]);
 
   return (
-    <dialog ref={modalRef} onKeyDown={handleKeyDown} className="modal">
-      {hasCloseBtn && (
-        <button className="modal-close-btn" onClick={handleCloseModal}>
-          Close
-        </button>
-      )}
-      {children}
+    <dialog className="modal" ref={modalRef}>
+      <form onSubmit={(e) => e.preventDefault()}>
+        <Flex style={{ flexDirection: "column", gap: 20 }}>
+          <h4>Nominate a name to chat with others</h4>
+          <input
+            type="text"
+            className="name-input"
+            value={value}
+            onChange={(e) => setValue(e.target.value)}
+            required
+            placeholder="Name"
+          />
+          <button type="submit" className="name-button" onClick={() => setAuthor(value)}>
+            Set Name
+          </button>
+        </Flex>
+      </form>
     </dialog>
   );
 };
-
-export default Modal;

@@ -1,10 +1,14 @@
-export const NewMessageNotification = () => {
+interface NewMessageNotificationProps {
+  readonly handleScroll: () => void;
+}
+
+export const NewMessageNotification = ({ handleScroll }: NewMessageNotificationProps) => {
   return (
     <div
       style={{ position: "fixed", bottom: 95, width: "100%", textAlign: "center", cursor: "pointer" }}
-      onClick={() => document.getElementById("#message-end")?.scrollIntoView({ behavior: "smooth" })}
+      onClick={handleScroll}
     >
-      New Message
+      Check new Message
     </div>
   );
 };

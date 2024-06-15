@@ -1,22 +1,21 @@
-import { useState } from "react";
 import { v4 } from "uuid";
 import "./App.css";
-import ChatBox from "./components/Chat";
+import { ChatBox } from "./components/Chat";
 import { useSessionStorage } from "./hooks/useSessionStorage";
 import { UserContext } from "./providers/user";
 import { Flex } from "./shared/Flex";
+import { UsernameModal } from "./shared/Modal";
 
 function App() {
-  const [user, setUser] = useSessionStorage("user", "");
+  const [author, setAuthor] = useSessionStorage("user", "");
   const [id] = useSessionStorage("sessionId", v4());
-  const [lastViewed, setLastViewed] = useState("");
 
   return (
-    <UserContext.Provider value={{ name: user, id, lastViewed, setLastViewed }}>
-      {!user && <div>Type a username</div>}
+    <UserContext.Provider value={{ author: author, setAuthor: setAuthor, authorId: id }}>
       <Flex style={{ flexDirection: "column" }}>
         <ChatBox />
       </Flex>
+      <UsernameModal />
     </UserContext.Provider>
   );
 }
