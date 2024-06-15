@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { usePagination } from "../../hooks/usePagination";
+import { PrimaryButton } from "../../shared/Button/primary";
 import { getFirstItem } from "../../util";
 import ChatInput from "../Input";
 import { Message } from "../Message";
@@ -31,7 +32,8 @@ export const ChatBox = () => {
       <div className="messages-container">
         <div style={{ textAlign: "center" }}>
           {loading && <div>Loading</div>}
-          {hasMore && !loading && <button onClick={more}>Load More</button>}
+          {!loading && hasMore && <PrimaryButton title="Load more" eventHandler={more} />}
+          {!loading && !hasMore && <div> Welcome to the beginning</div>}
         </div>
         {[...data].reverse().map((d) => (
           <Message
