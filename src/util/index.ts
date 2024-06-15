@@ -10,4 +10,5 @@ export const valueOrDefault = (v: string | null, d: string) => {
 
 export const getLastItem = <T>(arr?: T[] | null) => (Array.isArray(arr) && arr.length ? [...arr].pop() : null);
 
-export const getFirstItem = <T>(arr?: T[] | null) => (Array.isArray(arr) && arr.length ? [...arr].shift() : null);
+export const getFirstItem = <T>(arr?: ReadonlyArray<T> | null) =>
+  Array.isArray(arr) && arr.length ? [...arr].shift() : null;

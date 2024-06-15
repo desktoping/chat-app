@@ -10,14 +10,13 @@ import {
 } from "firebase/firestore";
 import { Message } from "../types";
 
-// Your web app's Firebase configuration
 const firebaseConfig = {
   apiKey: process.env.REACT_APP_FIREBASE_API_KEY,
-  authDomain: "chat-app-cd694.firebaseapp.com",
-  projectId: "chat-app-cd694",
-  storageBucket: "chat-app-cd694.appspot.com",
-  messagingSenderId: "962812282887",
-  appId: "1:962812282887:web:a538fd6f892ffe332942a2",
+  authDomain: process.env.REACT_APP_FIREBASE_AUTH_DOMAIN,
+  projectId: process.env.REACT_APP_FIREBASE_PROJECT_ID,
+  storageBucket: process.env.REACT_APP_FIREBASE_STORAGE_BUCKET,
+  messagingSenderId: process.env.REACT_APP_FIREBASE_MESSAGE_SENDER,
+  appId: process.env.REACT_APP_FIREBASE_APP_ID,
 };
 
 const app = initializeApp(firebaseConfig);

@@ -10,9 +10,6 @@ export const ChatBox = () => {
   const [lastViewedMessage, setLastViewedMessage] = useState("");
   const lastMessageRef = useRef<HTMLDivElement>(null);
 
-  // const q = query(dbMessageRef, orderBy("createdAt", "desc"), limit(10));
-  // const [snapshot, loading] = useCollection(q);
-
   const [data, loading, more, hasMore] = usePagination();
 
   useEffect(() => {

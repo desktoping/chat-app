@@ -17,7 +17,7 @@ import { dbMessageRef } from "../util/firebase";
 
 const FETCH_LIMIT = 20;
 
-export const usePagination = (): [Array<Message>, boolean, () => void, boolean] => {
+export const usePagination = (): [ReadonlyArray<Message>, boolean, () => void, boolean] => {
   const [data, setData] = useState<Array<Message>>([]);
   const [fireStoreLoading, setFireStoreLoading] = useState(false);
   const [lastItem, setLastItem] = useState<QueryDocumentSnapshot<Message, DocumentData> | null>(null);
