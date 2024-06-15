@@ -26,7 +26,6 @@ export const db = getFirestore(app);
 
 const messageConverted: FirestoreDataConverter<Message> = {
   toFirestore(message: WithFieldValue<Message>): DocumentData {
-    console.log(message, "n");
     return { author: message.author, text: message.text, createdAt: message.createdAt, authorId: message.authorId };
   },
   fromFirestore(snapshot: QueryDocumentSnapshot, options: SnapshotOptions): Message {
