@@ -52,7 +52,7 @@ export const usePagination = (): [ReadonlyArray<Message>, boolean, () => void, b
       .finally(() => {
         setFireStoreLoading(false);
       });
-  }, [lastItem, dbMessageRef, setFireStoreLoading]);
+  }, [lastItem, setFireStoreLoading]);
 
   return [data, fireStoreLoading, more, hasMoreItems];
 };

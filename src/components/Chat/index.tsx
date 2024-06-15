@@ -17,7 +17,7 @@ export const ChatBox = () => {
       setLastViewedMessage(getFirstItem(data)?.id ?? "");
       lastMessageRef.current?.scrollIntoView({ behavior: "smooth" });
     }
-  }, [data]);
+  }, [data, lastViewedMessage]);
 
   const lastMessageId = useMemo(() => getFirstItem(data)?.id ?? "", [data]);
 
@@ -45,7 +45,7 @@ export const ChatBox = () => {
         ))}
       </div>
       <ChatInput handleScroll={handleScrollToLatestMessage} />
-      {lastViewedMessage != lastMessageId && <NewMessageNotification handleScroll={handleScrollToLatestMessage} />}
+      {lastViewedMessage !== lastMessageId && <NewMessageNotification handleScroll={handleScrollToLatestMessage} />}
     </main>
   );
 };
